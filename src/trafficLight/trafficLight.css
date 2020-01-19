@@ -1,0 +1,57 @@
+.traffic-light {
+    border-top: 1px solid #4d4d4d;
+    display: grid;
+    grid-template-rows: repeat(2,1fr);
+}
+
+.traffic-light__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+.traffic-light__input {
+    margin-left: 10px;
+}
+
+.traffic-light__input input {
+    border: none;
+    border-bottom: 1px solid #4d4d4d;
+    margin-right: 5px;
+    padding-left: 5px;
+    width: 8%;
+    color: #4d4d4d;
+
+}
+
+.traffic-light__input input:focus {
+    outline: 0;
+}
+
+.outsite {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    opacity: .2;
+}
+
+.traffic-light .active {
+    opacity: 1;
+}
+
+.color-red {
+    background-color: red;
+}
+.color-yellow {
+    background-color: yellow;
+}
+.color-green {
+    background-color: green;
+}
+
+.custom__traffic-light {
+    display: grid;
+}
+
+.custom__traffic-light div,p {
+    margin-left: 10px;
+}

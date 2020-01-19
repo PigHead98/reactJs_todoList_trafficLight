@@ -1,0 +1,59 @@
+.App {
+    margin: auto;
+    width: 500px;
+    border: 1px solid #4d4d4d;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #4d4d4d;
+}
+
+.header > img {
+    margin: 10px;
+    width: 32px;
+    height: 32px;
+}
+
+.header > input {
+    margin: 10px;
+    width: 100%;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    color: #4d4d4d;
+    outline: none;
+    border: none;
+    padding: 10px 0;
+}
+
+.Index {
+    display: flex;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    color: #4d4d4d;
+    border-bottom: 1px solid #4d4d4d;
+    padding: 10px 0;
+}
+
+.Index > img {
+    margin: 10px;
+    width: 32px;
+    height: 32px;
+}
+
+.Index > p {
+    margin: 10px;
+    border-bottom: none;
+}
+
+.Index-complete > p {
+    text-decoration: line-through;
+    opacity: .3;
+}
+
+.footer {
+    margin: 10px 0 10px 10px;
+}
