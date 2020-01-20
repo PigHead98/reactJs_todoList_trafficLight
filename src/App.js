@@ -61,6 +61,7 @@ class App extends Component {
             }, 1000
         );
 
+        this.focusInput = React.createRef();
     }
 
     setTimeAndColor() {
@@ -73,8 +74,8 @@ class App extends Component {
 
             this.GREEN_TIME = item.green.time;
             this.GREEN = item.green.value;
+            return true;
         } );
-        return true;
     }
 
     timeOnKeyUp() {
@@ -97,12 +98,12 @@ class App extends Component {
                         default :
                             alert( 'error' );
                     }
+                    this.setState( {
+                        colorLight: update
+                    } );
+                    this.resetLight();
+                    return alert( ' Time of this color has been changed!!! ' );
                 } );
-                this.setState( {
-                    colorLight: update
-                } );
-                this.resetLight();
-                alert( ' Time of this color has been changed!!! ' );
             }
         }
     }
@@ -111,10 +112,6 @@ class App extends Component {
         this.setState( state => ({
             seconds: state.seconds + 1
         }) );
-    }
-
-    componentWillMount() {
-        this.upTime();
     }
 
     resetLight() {
@@ -320,9 +317,13 @@ class App extends Component {
         }
     }
 
+    componentDidMount() {
+        this.upTime();
+        this.focusInput.current.focus();
+    }
+
     render() {
         const { lightSetting, listData, newData, seconds, colorLight } = this.state;
-
         let data = listData.map( ( item, index ) =>
             item.isComplete === this.state.status
             &&
@@ -356,6 +357,7 @@ class App extends Component {
                         value={ newData }
                         onChange={ this.onChange }
                         onKeyUp={ this.onKeyUp }
+                        ref={this.focusInput}
                     />
                 </div>
 
