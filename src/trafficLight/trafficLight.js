@@ -7,6 +7,7 @@ class TrafficLight extends Component {
     constructor( props ) {
         super( props );
 
+        //set color value
         this.props.colorLight.map( item => {
             this.red = item.red.value;
             this.timeRed = item.red.time;
@@ -30,6 +31,7 @@ class TrafficLight extends Component {
         this.className = require( 'classnames' );
     }
 
+    // when user change time of color at input
     onTimeChange( color ) {
         return ( e ) => {
             const { valueTime } = this.state;
@@ -56,7 +58,7 @@ class TrafficLight extends Component {
     render() {
         let color;
         const {
-            currenColor,
+            currentColor,
             seconds,
             stopTime,
             starTime,
@@ -65,9 +67,9 @@ class TrafficLight extends Component {
             chooseColor
         } = this.props;
 
+        currentColor.map( item => (color = item.currentColor) ); // get current color
 
-        currenColor.map( item => (color = item.currenColor) );
-
+        //check current color to add class active
         let classTrafficLightRed = this.className( {
             'outsite color-red': true,
             'active': color === this.red,

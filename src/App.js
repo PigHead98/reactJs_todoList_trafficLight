@@ -11,8 +11,9 @@ class App extends Component {
         super();
 
         this.state = {
-            status: 'all',
-            newData: '',
+            // todo list
+            status: 'all', // value all/ completed/doing
+            newData: '', // default data of input
             listData: [
                 {
                     title: 'list 1', isComplete: true
@@ -24,6 +25,7 @@ class App extends Component {
                     title: 'list 3', isComplete: false
                 },
             ],
+
             //traffic light
             colorLight: [ {
                 red: {
@@ -41,22 +43,21 @@ class App extends Component {
             } ],
             lightSetting: [
                 {
-                    currenColor: 0, timeColor: 10
+                    currentColor: 0, timeColor: 10
                 }
             ],
-            currenColor: this.RED,
+            currentColor: this.RED,
             seconds: 0
         };
 
         this.onKeyUp = this.onKeyUp.bind( this );
         this.onChange = this.onChange.bind( this );
         this.tickAllList = this.tickAllList.bind( this );
-
         this.resetLight = this.resetLight.bind( this );
 
         setInterval( () => {
                 this.setState( {
-                    currenColor: this.nextColor( this.state.currenColor )
+                    currentColor: this.nextColor( this.state.currentColor )
                 } );
             }, 1000
         );
@@ -78,6 +79,11 @@ class App extends Component {
         } );
     }
 
+    /* detect value in trafficLight js when user tap
+    * event => event
+    * color => color was chosen
+    * valueColor => new time
+    */
     timeOnKeyUp() {
         return ( event, color, valueColor ) => {
             const { colorLight } = this.state;
@@ -108,18 +114,20 @@ class App extends Component {
         }
     }
 
+    // up seconds every uptime() was called
     tick() {
         this.setState( state => ({
             seconds: state.seconds + 1
         }) );
     }
 
+    // reset traffic light to red color
     resetLight() {
-        this.setTimeAndColor();
+        this.setTimeAndColor(); // to accept new value when user change right away
         this.setState( {
             lightSetting: [
                 {
-                    currenColor: this.RED,
+                    currentColor: this.RED,
                     timeColor: this.RED_TIME
                 }
             ],
@@ -127,6 +135,7 @@ class App extends Component {
         } );
     }
 
+    // uptime +1 second, status is used to detect when a user clicks repeatedly
     upTime() {
         if ( status ) {
             status = false;
@@ -149,15 +158,17 @@ class App extends Component {
 
     changeColor( item ) {
         this.setState( {
-            lightSetting: this.nextColor( item.currenColor ),
+            lightSetting: this.nextColor( item.currentColor ),
             seconds: 0
         } );
     }
 
+    // when user click color or name color
     chooseColor() {
         return ( color ) => {
             this.stopTime();
             let timeNow;
+            //get time of color was chosen
             switch ( color ) {
                 case this.RED:
                     timeNow = this.RED_TIME;
@@ -171,10 +182,12 @@ class App extends Component {
                 default :
                     alert( 'error' );
             }
+
+            // set state light setting to show color was chosen
             this.setState( {
                 lightSetting: [
                     {
-                        currenColor: color,
+                        currentColor: color,
                         timeColor: timeNow
                     }
                 ],
@@ -183,6 +196,7 @@ class App extends Component {
         }
     }
 
+    // when user click at todo item
     onClickItem( item ) {
         return ( e ) => {
             const status = item.isComplete;
@@ -203,14 +217,17 @@ class App extends Component {
         };
     }
 
+    // detect key enter and add value to todo list
     onKeyUp( e ) {
         let text = e.target.value;
 
+        // key code of enter is 13
         if ( e.keyCode === 13 ) {
             if ( !text || text.trim() === '' ) {
                 return;
             }
 
+            // add new item
             this.setState( {
                 newData: '',
                 listData: [
@@ -223,18 +240,22 @@ class App extends Component {
         return false;
     }
 
+    // change value of input "add new todo item" when user tap
     onChange( e ) {
         this.setState( {
             newData: e.target.value
         } );
     }
 
+    // when user click arrow down
     tickAllList() {
         let listDataWhenTickAll = this.state.listData;
 
+        // check status of list data
         let status = this.checkTick( this.state.listData );
 
         if ( status ) {
+            // list data have 2 status now (completed AND doing)
             this.state.listData.map( ( item, index ) => (
                 listDataWhenTickAll[ index ] = ({
                     ...item,
@@ -242,6 +263,7 @@ class App extends Component {
                 })
             ) );
         } else {
+            // list data has only 1 status now (completed OR doing)
             this.state.listData.map( ( item, index ) => (
                 listDataWhenTickAll[ index ] = ({
                     ...item,
@@ -256,6 +278,10 @@ class App extends Component {
     }
 
     checkTick( data ) {
+        /*
+        * true is completed
+        * false is doing
+        */
         let status = {
             true: true,
             false: false
@@ -269,11 +295,16 @@ class App extends Component {
                 status.false = !item.isComplete
         ) );
 
+        /*
+        * if that list date have completed and doing => tick all = completed
+        * else tick all => next status of list data = !now status of list data.
+        */
         (status.true === status.false) ? status = true : status = false;
 
         return status;
     }
 
+    // set status of state follow by all/ completed/ doing
     filterData( type ) {
         return ( e ) => {
             switch ( type ) {
@@ -294,35 +325,47 @@ class App extends Component {
         };
     }
 
-    nextColor( currenColor ) {
+    // set next color when end time of current color
+    nextColor( currentColor ) {
 
+        // set time and value of color
         this.setTimeAndColor();
 
-        switch ( currenColor ) {
+        /* current color :
+        * red -> green
+        * green -> yellow
+        * yellow -> red
+        * default is green
+        */
+        switch ( currentColor ) {
             case this.YELLOW:
                 return [ {
-                    currenColor: this.RED,
+                    currentColor: this.RED,
                     timeColor: this.RED_TIME
                 } ];
             case this.RED:
                 return [ {
-                    currenColor: this.GREEN,
+                    currentColor: this.GREEN,
                     timeColor: this.GREEN_TIME
                 } ];
             default :
                 return [ {
-                    currenColor: this.YELLOW,
+                    currentColor: this.YELLOW,
                     timeColor: this.YELLOW_TIME
                 } ];
         }
     }
 
     componentDidMount() {
+        // run time
         this.upTime();
+
+        // ref: focus to input "add new todo item"
         this.focusInput.current.focus();
     }
 
     componentWillUnmount() {
+        // clearInterval
         this.stopTime();
     }
 
@@ -361,7 +404,7 @@ class App extends Component {
                         value={ newData }
                         onChange={ this.onChange }
                         onKeyUp={ this.onKeyUp }
-                        ref={this.focusInput}
+                        ref={ this.focusInput }
                     />
                 </div>
 
@@ -382,7 +425,7 @@ class App extends Component {
                 </div>
 
                 <TrafficLight
-                    currenColor={ lightSetting }
+                    currentColor={ lightSetting }
                     seconds={ seconds }
                     colorLight={ colorLight }
                     stopTime={ () => this.stopTime() }

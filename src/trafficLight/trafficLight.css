@@ -45,12 +45,15 @@
 
 .color-red {
     background-color: red;
+    cursor: pointer;
 }
 .color-yellow {
     background-color: yellow;
+    cursor: pointer;
 }
 .color-green {
     background-color: green;
+    cursor: pointer;
 }
 
 .custom__traffic-light {
