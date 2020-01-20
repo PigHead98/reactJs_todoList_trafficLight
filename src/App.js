@@ -322,6 +322,10 @@ class App extends Component {
         this.focusInput.current.focus();
     }
 
+    componentWillUnmount() {
+        this.stopTime();
+    }
+
     render() {
         const { lightSetting, listData, newData, seconds, colorLight } = this.state;
         let data = listData.map( ( item, index ) =>
@@ -382,7 +386,7 @@ class App extends Component {
                     seconds={ seconds }
                     colorLight={ colorLight }
                     stopTime={ () => this.stopTime() }
-                    starTime={ () => this.componentWillMount() }
+                    starTime={ () => this.componentDidMount() }
                     resetLight={ this.resetLight }
                     onTimeChange={ this.onTimeChange }
                     timeOnKeyUp={ this.timeOnKeyUp() }

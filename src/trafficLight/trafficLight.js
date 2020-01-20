@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button } from 'reactstrap';
 
 import './trafficLight.css'
 
@@ -135,9 +136,9 @@ class TrafficLight extends Component {
                 <div className="custom__traffic-light">
                     <p className="custom__traffic-light__second"> Seconds: { seconds } </p>
                     <div className="custom__traffic-light__button">
-                        <button onClick={ stopTime }>stop</button>
-                        <button onClick={ starTime }>start</button>
-                        <button onClick={ resetLight }>reset</button>
+                        <Button color="warning" onClick={ stopTime }>stop</Button>{' '}
+                        <Button color="success" onClick={ starTime }>start</Button>{' '}
+                        <Button color="info" onClick={ resetLight }>reset</Button>{' '}
                     </div>
                 </div>
             </div>
