@@ -61,7 +61,7 @@ class TrafficLight extends Component {
             starTime,
             resetLight,
             timeOnKeyUp,
-            test
+            chooseColor
         } = this.props;
 
 
@@ -86,37 +86,50 @@ class TrafficLight extends Component {
                 <div className="traffic-light__row">
                     <div className="traffic-light__col">
                         <div className="traffic-light__input">
-                            RED: <br/>
+                            <a
+                                href="javascrip:void(0)"
+                                className="color-red"
+                                onClick={ () => chooseColor( this.red ) }
+                            >RED:</a>
                             <input
                                 type="text"
                                 value={ this.state.valueTime.red }
                                 onChange={ this.onTimeChange( this.red ) }
-                                onKeyUp={ (e) => timeOnKeyUp( e,this.red,this.state.valueTime.red ) }
+                                onKeyUp={ ( e ) => timeOnKeyUp( e, this.red, this.state.valueTime.red ) }
                             /> giây
                         </div>
                         <div className="traffic-light__input">
-                            YELLOW: <br/>
+                            <a href="javascrip:void(0)"
+                               className="color-yellow"
+                               onClick={ () => chooseColor( this.yellow ) }
+                            >YELLOW:</a>
                             <input
                                 type="text"
                                 value={ this.state.valueTime.yellow }
                                 onChange={ this.onTimeChange( this.yellow ) }
-                                onKeyUp={ (e) => timeOnKeyUp( e,this.yellow,this.state.valueTime.yellow ) }
+                                onKeyUp={ ( e ) => timeOnKeyUp( e, this.yellow, this.state.valueTime.yellow ) }
                             /> giây
                         </div>
                         <div className="traffic-light__input">
-                            GREEN: <br/>
+                            <a
+                                href="javascrip:void(0)"
+                                className="color-green"
+                                onClick={ () => chooseColor( this.green ) }
+                            >
+                                GREEN:
+                            </a>
                             <input
                                 type="text"
                                 value={ this.state.valueTime.green }
                                 onChange={ this.onTimeChange( this.green ) }
-                                onKeyUp={ (e) => timeOnKeyUp( e,this.green,this.state.valueTime.green ) }
+                                onKeyUp={ ( e ) => timeOnKeyUp( e, this.green, this.state.valueTime.green ) }
                             /> giây
                         </div>
                     </div>
                     <div className="traffic-light__col">
-                        <div className={ classTrafficLightRed }/>
-                        <div className={ classTrafficLightYellow }/>
-                        <div className={ classTrafficLightGreen }/>
+                        <div onClick={ () => chooseColor( this.red ) } className={ classTrafficLightRed }/>
+                        <div onClick={ () => chooseColor( this.yellow ) } className={ classTrafficLightYellow }/>
+                        <div onClick={ () => chooseColor( this.green ) } className={ classTrafficLightGreen }/>
                     </div>
                 </div>
                 <div className="custom__traffic-light">

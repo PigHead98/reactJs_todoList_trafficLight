@@ -102,7 +102,7 @@ class App extends Component {
                     colorLight: update
                 } );
                 this.resetLight();
-                alert(' Completed!!! ');
+                alert( ' Time of this color has been changed!!! ' );
             }
         }
     }
@@ -155,6 +155,35 @@ class App extends Component {
             lightSetting: this.nextColor( item.currenColor ),
             seconds: 0
         } );
+    }
+
+    chooseColor() {
+        return ( color ) => {
+            this.stopTime();
+            let timeNow;
+            switch ( color ) {
+                case this.RED:
+                    timeNow = this.RED_TIME;
+                    break;
+                case this.YELLOW:
+                    timeNow = this.YELLOW_TIME;
+                    break;
+                case this.GREEN:
+                    timeNow = this.GREEN_TIME;
+                    break;
+                default :
+                    alert( 'error' );
+            }
+            this.setState( {
+                lightSetting: [
+                    {
+                        currenColor: color,
+                        timeColor: timeNow
+                    }
+                ],
+                seconds: 0
+            } );
+        }
     }
 
     onClickItem( item ) {
@@ -355,6 +384,7 @@ class App extends Component {
                     resetLight={ this.resetLight }
                     onTimeChange={ this.onTimeChange }
                     timeOnKeyUp={ this.timeOnKeyUp() }
+                    chooseColor={ this.chooseColor() }
                 />
             </div>
         );
