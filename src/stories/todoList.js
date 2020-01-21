@@ -1,10 +1,7 @@
 import React from 'react';
-import { addDecorator, storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
+import { storiesOf } from '@storybook/react';
 import Index from '../components/index';
 import { action } from '@storybook/addon-actions';
-
-addDecorator( withInfo );
 
 storiesOf( 'Index', module )
     .add(
