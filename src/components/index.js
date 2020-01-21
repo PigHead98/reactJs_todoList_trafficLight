@@ -3,6 +3,8 @@ import './index.css';
 import checkImg from '../img/check.png';
 import checkCompelteImg from '../img/check-done.png';
 
+import PropTypes from 'prop-types';
+
 class Index extends Component {
     constructor() {
         super();
@@ -27,5 +29,12 @@ class Index extends Component {
         );
     }
 }
+
+Index.propTypes = {
+    data : PropTypes.shape({
+        title : PropTypes.string,
+        isComplete : PropTypes.bool
+    })
+};
 
 export default Index;

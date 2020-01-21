@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-
 import './trafficLight.css'
+
+import PropTypes from 'prop-types';
 
 class TrafficLight extends Component {
     constructor( props ) {
@@ -138,14 +139,41 @@ class TrafficLight extends Component {
                 <div className="custom__traffic-light">
                     <p className="custom__traffic-light__second"> Seconds: { seconds } </p>
                     <div className="custom__traffic-light__button">
-                        <Button color="warning" onClick={ stopTime }>stop</Button>{' '}
-                        <Button color="success" onClick={ starTime }>start</Button>{' '}
-                        <Button color="info" onClick={ resetLight }>reset</Button>{' '}
+                        <Button color="warning" onClick={ stopTime }>stop</Button>{ ' ' }
+                        <Button color="success" onClick={ starTime }>start</Button>{ ' ' }
+                        <Button color="info" onClick={ resetLight }>reset</Button>{ ' ' }
                     </div>
                 </div>
             </div>
         );
     }
 }
+
+TrafficLight.propTypes = {
+    currentColor: PropTypes.arrayOf(
+        PropTypes.shape(
+            {
+                currentColor: PropTypes.number.isRequired,
+                timeColor: PropTypes.number.isRequired
+            }
+        )
+    ),
+    colorLight: PropTypes.arrayOf(
+        PropTypes.objectOf(
+            PropTypes.shape(
+                {
+                    value: PropTypes.number,
+                    time: PropTypes.number
+                }
+            )
+        )
+    ),
+    seconds: PropTypes.number,
+    stopTime: PropTypes.func,
+    starTime: PropTypes.func,
+    resetLight: PropTypes.func,
+    timeOnKeyUp: PropTypes.func,
+    chooseColor: PropTypes.func
+};
 
 export default TrafficLight;
