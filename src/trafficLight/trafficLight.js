@@ -157,7 +157,7 @@ TrafficLight.propTypes = {
                 timeColor: PropTypes.number.isRequired
             }
         )
-    ),
+    ).isRequired,
     colorLight: PropTypes.arrayOf(
         PropTypes.objectOf(
             PropTypes.shape(
@@ -167,13 +167,23 @@ TrafficLight.propTypes = {
                 }
             )
         )
-    ),
+    ).isRequired,
+    /** time to show*/
     seconds: PropTypes.number,
+    /** traffic light will be stop when user click this fn => clearInterval*/
     stopTime: PropTypes.func,
+    /** traffic light will be star when user click this fn => setInterval*/
     starTime: PropTypes.func,
+    /** reset to red color*/
     resetLight: PropTypes.func,
+    /** tap new time*/
     timeOnKeyUp: PropTypes.func,
+    /** change color*/
     chooseColor: PropTypes.func
+};
+
+TrafficLight.defaultProps = {
+    seconds: 0
 };
 
 export default TrafficLight;
