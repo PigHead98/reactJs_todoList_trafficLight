@@ -4,6 +4,14 @@ import Index from './components/index';
 import TrafficLight from './trafficLight/trafficLight';
 import tickAll from './img/tick-all.svg';
 
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useParams
+} from "react-router-dom";
+
 var status = true;
 
 class App extends Component {
@@ -361,13 +369,14 @@ class App extends Component {
         this.upTime();
 
         // ref: focus to input "add new todo item"
-        this.focusInput.current.focus();
+        this.focusInput.current !== null && this.focusInput.current.focus();
     }
 
     componentWillUnmount() {
         // clearInterval
         this.stopTime();
     }
+
 
     render() {
         const { lightSetting, listData, newData, seconds, colorLight } = this.state;
@@ -394,47 +403,149 @@ class App extends Component {
         }
 
         return (
-
             <div className="App">
-                <div className="header">
-                    <img onClick={ this.tickAllList } src={ tickAll } alt={ tickAll }/>
-                    <input
-                        type="text"
-                        placeholder="Add new todo item"
-                        value={ newData }
-                        onChange={ this.onChange }
-                        onKeyUp={ this.onKeyUp }
-                        ref={ this.focusInput }
-                    />
-                </div>
+                {/*<div className="header">*/}
+                {/*    <img onClick={ this.tickAllList } src={ tickAll } alt={ tickAll }/>*/}
+                {/*    <input*/}
+                {/*        type="text"*/}
+                {/*        placeholder="Add new todo item"*/}
+                {/*        value={ newData }*/}
+                {/*        onChange={ this.onChange }*/}
+                {/*        onKeyUp={ this.onKeyUp }*/}
+                {/*        ref={ this.focusInput }*/}
+                {/*    />*/}
+                {/*</div>*/}
 
-                {
-                    listData.length > 0
-                    &&
-                    data
-                }
-                {
-                    listData.length === 0
-                    &&
-                    'list empty'
-                }
-                <div className="footer">
-                    <button onClick={ this.filterData( 'all' ) }>All</button>
-                    <button onClick={ this.filterData( 'completed' ) }>Completed</button>
-                    <button onClick={ this.filterData( 'doing' ) }>Doing</button>
-                </div>
+                {/*{*/}
+                {/*    listData.length > 0*/}
+                {/*    &&*/}
+                {/*    data*/}
+                {/*}*/}
+                {/*{*/}
+                {/*    listData.length === 0*/}
+                {/*    &&*/}
+                {/*    'list empty'*/}
+                {/*}*/}
+                {/*<div className="footer">*/}
+                {/*    <button onClick={ this.filterData( 'all' ) }>All</button>*/}
+                {/*    <button onClick={ this.filterData( 'completed' ) }>Completed</button>*/}
+                {/*    <button onClick={ this.filterData( 'doing' ) }>Doing</button>*/}
+                {/*</div>*/}
+                {/*<TrafficLight*/}
+                {/*    currentColor={ lightSetting }*/}
+                {/*    seconds={ seconds }*/}
+                {/*    colorLight={ colorLight }*/}
+                {/*    stopTime={ () => this.stopTime() }*/}
+                {/*    starTime={ () => this.componentDidMount() }*/}
+                {/*    resetLight={ this.resetLight }*/}
+                {/*    onTimeChange={ this.onTimeChange }*/}
+                {/*    timeOnKeyUp={ this.timeOnKeyUp() }*/}
+                {/*    chooseColor={ this.chooseColor() }*/}
+                {/*/>*/}
+                <Router>
+                    <div>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <Link to="/">All</Link>
+                                </li>
+                                <li>
+                                    <Link to="/todo-list">Todo List</Link>
+                                </li>
+                                <li>
+                                    <Link to="/traffic-light">Traffic Light</Link>
+                                </li>
+                            </ul>
+                        </nav>
 
-                <TrafficLight
-                    currentColor={ lightSetting }
-                    seconds={ seconds }
-                    colorLight={ colorLight }
-                    stopTime={ () => this.stopTime() }
-                    starTime={ () => this.componentDidMount() }
-                    resetLight={ this.resetLight }
-                    onTimeChange={ this.onTimeChange }
-                    timeOnKeyUp={ this.timeOnKeyUp() }
-                    chooseColor={ this.chooseColor() }
-                />
+                        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+                        <Switch>
+                            <Route path="/" exact>
+                                <div className="header">
+                                    <img onClick={ this.tickAllList } src={ tickAll } alt={ tickAll }/>
+                                    <input
+                                        type="text"
+                                        placeholder="Add new todo item"
+                                        value={ newData }
+                                        onChange={ this.onChange }
+                                        onKeyUp={ this.onKeyUp }
+                                        ref={ this.focusInput }
+                                    />
+                                </div>
+
+                                {
+                                    listData.length > 0
+                                    &&
+                                    data
+                                }
+                                {
+                                    listData.length === 0
+                                    &&
+                                    'list empty'
+                                }
+                                <div className="footer">
+                                    <button onClick={ this.filterData( 'all' ) }>All</button>
+                                    <button onClick={ this.filterData( 'completed' ) }>Completed</button>
+                                    <button onClick={ this.filterData( 'doing' ) }>Doing</button>
+                                </div>
+                                <TrafficLight
+                                    currentColor={ lightSetting }
+                                    seconds={ seconds }
+                                    colorLight={ colorLight }
+                                    stopTime={ () => this.stopTime() }
+                                    starTime={ () => this.componentDidMount() }
+                                    resetLight={ this.resetLight }
+                                    onTimeChange={ this.onTimeChange }
+                                    timeOnKeyUp={ this.timeOnKeyUp() }
+                                    chooseColor={ this.chooseColor() }
+                                />
+                            </Route>
+                            <Route  path="/todo-list"  exact>
+                                <div className="header">
+                                    <img onClick={ this.tickAllList } src={ tickAll } alt={ tickAll }/>
+                                    <input
+                                        type="text"
+                                        placeholder="Add new todo item"
+                                        value={ newData }
+                                        onChange={ this.onChange }
+                                        onKeyUp={ this.onKeyUp }
+                                        ref={ this.focusInput }
+                                    />
+                                </div>
+
+                                {
+                                    listData.length > 0
+                                    &&
+                                    data
+                                }
+                                {
+                                    listData.length === 0
+                                    &&
+                                    'list empty'
+                                }
+                                <div className="footer">
+                                    <button onClick={ this.filterData( 'all' ) }>All</button>
+                                    <button onClick={ this.filterData( 'completed' ) }>Completed</button>
+                                    <button onClick={ this.filterData( 'doing' ) }>Doing</button>
+                                </div>
+                            </Route>
+                            <Route path="/traffic-light" exact>
+                                <TrafficLight
+                                    currentColor={ lightSetting }
+                                    seconds={ seconds }
+                                    colorLight={ colorLight }
+                                    stopTime={ () => this.stopTime() }
+                                    starTime={ () => this.componentDidMount() }
+                                    resetLight={ this.resetLight }
+                                    onTimeChange={ this.onTimeChange }
+                                    timeOnKeyUp={ this.timeOnKeyUp() }
+                                    chooseColor={ this.chooseColor() }
+                                />
+                            </Route>
+                        </Switch>
+                    </div>
+                </Router>
             </div>
         );
     }
