@@ -65,7 +65,8 @@ class TrafficLight extends Component {
             starTime,
             resetLight,
             timeOnKeyUp,
-            chooseColor
+            chooseColor,
+            titleElement
         } = this.props;
 
         currentColor.map( item => (color = item.currentColor) ); // get current color
@@ -96,6 +97,7 @@ class TrafficLight extends Component {
                                 onClick={ () => chooseColor( this.red ) }
                             >RED:</a>
                             <input
+                                title={titleElement}
                                 type="text"
                                 value={ this.state.valueTime.red }
                                 onChange={ this.onTimeChange( this.red ) }
@@ -108,6 +110,7 @@ class TrafficLight extends Component {
                                onClick={ () => chooseColor( this.yellow ) }
                             >YELLOW:</a>
                             <input
+                                title={titleElement}
                                 type="text"
                                 value={ this.state.valueTime.yellow }
                                 onChange={ this.onTimeChange( this.yellow ) }
@@ -123,6 +126,7 @@ class TrafficLight extends Component {
                                 GREEN:
                             </a>
                             <input
+                                title={titleElement}
                                 type="text"
                                 value={ this.state.valueTime.green }
                                 onChange={ this.onTimeChange( this.green ) }

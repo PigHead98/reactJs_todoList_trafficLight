@@ -8,8 +8,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link,
-    useParams
+    Link
 } from "react-router-dom";
 
 var status = true;
@@ -35,6 +34,7 @@ class App extends Component {
             ],
 
             //traffic light
+            titleElement: "Enter to accept change",
             colorLight: [ {
                 red: {
                     value: 0,
@@ -379,7 +379,8 @@ class App extends Component {
 
 
     render() {
-        const { lightSetting, listData, newData, seconds, colorLight } = this.state;
+        const { lightSetting, listData, newData, seconds, colorLight, titleElement } = this.state;
+
         let data = listData.map( ( item, index ) =>
             item.isComplete === this.state.status
             &&
@@ -389,6 +390,35 @@ class App extends Component {
                 onClick={ this.onClickItem( item ) }
             />
         );
+        let headerTodoList = <div className="header">
+                                <img onClick={ this.tickAllList } src={ tickAll } alt={ tickAll }/>
+                                <input
+                                    type="text"
+                                    placeholder="Add new todo item"
+                                    value={ newData }
+                                    onChange={ this.onChange }
+                                    onKeyUp={ this.onKeyUp }
+                                    ref={ this.focusInput }
+                                />
+                            </div>;
+        let footerTodoList = <div className="footer">
+                                <button onClick={ this.filterData( 'all' ) }>All</button>
+                                <button onClick={ this.filterData( 'completed' ) }>Completed</button>
+                                <button onClick={ this.filterData( 'doing' ) }>Doing</button>
+                            </div>;
+
+        let showTrafficLight =  <TrafficLight
+                                    titleElement={ titleElement }
+                                    currentColor={ lightSetting }
+                                    seconds={ seconds }
+                                    colorLight={ colorLight }
+                                    stopTime={ () => this.stopTime() }
+                                    starTime={ () => this.componentDidMount() }
+                                    resetLight={ this.resetLight }
+                                    onTimeChange={ this.onTimeChange }
+                                    timeOnKeyUp={ this.timeOnKeyUp() }
+                                    chooseColor={ this.chooseColor() }
+                                />;
 
         if ( this.state.status === 'all' ) {
             data = listData.map( ( item, index ) =>
@@ -404,44 +434,6 @@ class App extends Component {
 
         return (
             <div className="App">
-                {/*<div className="header">*/}
-                {/*    <img onClick={ this.tickAllList } src={ tickAll } alt={ tickAll }/>*/}
-                {/*    <input*/}
-                {/*        type="text"*/}
-                {/*        placeholder="Add new todo item"*/}
-                {/*        value={ newData }*/}
-                {/*        onChange={ this.onChange }*/}
-                {/*        onKeyUp={ this.onKeyUp }*/}
-                {/*        ref={ this.focusInput }*/}
-                {/*    />*/}
-                {/*</div>*/}
-
-                {/*{*/}
-                {/*    listData.length > 0*/}
-                {/*    &&*/}
-                {/*    data*/}
-                {/*}*/}
-                {/*{*/}
-                {/*    listData.length === 0*/}
-                {/*    &&*/}
-                {/*    'list empty'*/}
-                {/*}*/}
-                {/*<div className="footer">*/}
-                {/*    <button onClick={ this.filterData( 'all' ) }>All</button>*/}
-                {/*    <button onClick={ this.filterData( 'completed' ) }>Completed</button>*/}
-                {/*    <button onClick={ this.filterData( 'doing' ) }>Doing</button>*/}
-                {/*</div>*/}
-                {/*<TrafficLight*/}
-                {/*    currentColor={ lightSetting }*/}
-                {/*    seconds={ seconds }*/}
-                {/*    colorLight={ colorLight }*/}
-                {/*    stopTime={ () => this.stopTime() }*/}
-                {/*    starTime={ () => this.componentDidMount() }*/}
-                {/*    resetLight={ this.resetLight }*/}
-                {/*    onTimeChange={ this.onTimeChange }*/}
-                {/*    timeOnKeyUp={ this.timeOnKeyUp() }*/}
-                {/*    chooseColor={ this.chooseColor() }*/}
-                {/*/>*/}
                 <Router>
                     <div>
                         <nav>
@@ -462,86 +454,46 @@ class App extends Component {
             renders the first one that matches the current URL. */}
                         <Switch>
                             <Route path="/" exact>
-                                <div className="header">
-                                    <img onClick={ this.tickAllList } src={ tickAll } alt={ tickAll }/>
-                                    <input
-                                        type="text"
-                                        placeholder="Add new todo item"
-                                        value={ newData }
-                                        onChange={ this.onChange }
-                                        onKeyUp={ this.onKeyUp }
-                                        ref={ this.focusInput }
-                                    />
-                                </div>
 
                                 {
-                                    listData.length > 0
-                                    &&
-                                    data
+                                    headerTodoList
                                 }
                                 {
-                                    listData.length === 0
-                                    &&
-                                    'list empty'
+                                    listData.length > 0
+                                    ?
+                                        data
+                                        :
+                                        'list empty'
                                 }
-                                <div className="footer">
-                                    <button onClick={ this.filterData( 'all' ) }>All</button>
-                                    <button onClick={ this.filterData( 'completed' ) }>Completed</button>
-                                    <button onClick={ this.filterData( 'doing' ) }>Doing</button>
-                                </div>
-                                <TrafficLight
-                                    currentColor={ lightSetting }
-                                    seconds={ seconds }
-                                    colorLight={ colorLight }
-                                    stopTime={ () => this.stopTime() }
-                                    starTime={ () => this.componentDidMount() }
-                                    resetLight={ this.resetLight }
-                                    onTimeChange={ this.onTimeChange }
-                                    timeOnKeyUp={ this.timeOnKeyUp() }
-                                    chooseColor={ this.chooseColor() }
-                                />
+                                {
+                                    footerTodoList
+                                }
+
+
+                                {
+                                    //traffic
+                                    showTrafficLight
+                                }
                             </Route>
                             <Route  path="/todo-list"  exact>
-                                <div className="header">
-                                    <img onClick={ this.tickAllList } src={ tickAll } alt={ tickAll }/>
-                                    <input
-                                        type="text"
-                                        placeholder="Add new todo item"
-                                        value={ newData }
-                                        onChange={ this.onChange }
-                                        onKeyUp={ this.onKeyUp }
-                                        ref={ this.focusInput }
-                                    />
-                                </div>
-
+                                {
+                                    headerTodoList
+                                }
                                 {
                                     listData.length > 0
-                                    &&
-                                    data
+                                        ?
+                                        data
+                                        :
+                                        'list empty'
                                 }
                                 {
-                                    listData.length === 0
-                                    &&
-                                    'list empty'
+                                    footerTodoList
                                 }
-                                <div className="footer">
-                                    <button onClick={ this.filterData( 'all' ) }>All</button>
-                                    <button onClick={ this.filterData( 'completed' ) }>Completed</button>
-                                    <button onClick={ this.filterData( 'doing' ) }>Doing</button>
-                                </div>
                             </Route>
                             <Route path="/traffic-light" exact>
-                                <TrafficLight
-                                    currentColor={ lightSetting }
-                                    seconds={ seconds }
-                                    colorLight={ colorLight }
-                                    stopTime={ () => this.stopTime() }
-                                    starTime={ () => this.componentDidMount() }
-                                    resetLight={ this.resetLight }
-                                    onTimeChange={ this.onTimeChange }
-                                    timeOnKeyUp={ this.timeOnKeyUp() }
-                                    chooseColor={ this.chooseColor() }
-                                />
+                                {
+                                    showTrafficLight
+                                }
                             </Route>
                         </Switch>
                     </div>
